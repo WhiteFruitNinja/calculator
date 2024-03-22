@@ -13,20 +13,6 @@ public class CalculatorController {
     // http://localhost:8080/hello?name=Dovydas&surname=Stankus
     // Metodo pavadinimas, klaustukas (?), raktas, lygybe (=), reiksme. Optional jeigu daugiau nori reiksmiu simbolis (&).
 
-    @GetMapping("/hello")
-    public String hello(@RequestParam(value = "name") String name2, String surname, int age) {
-        return "Hello " + name2 + " " + surname + " metai: " + age;
-    }
-    @GetMapping("/index")
-    public String index() {
-        return "<h1>Internetinis skaiciuotuvas. Atliks operacijas:</h1><br>" +
-                "&nbsp;&nbsp; Atimti<br>" +
-                "&nbsp;&nbsp; Dalinti<br>" +
-                "&nbsp;&nbsp; Sudeti<br>" +
-                "&nbsp;&nbsp; Dauginti<br>"
-                ;
-    }
-
     @RequestMapping(method = RequestMethod.GET, value = "/")
     String home(){
         // grąžiname JSP failą,turi būti talpinami 'webapp -> WEB-INF -> jsp' aplanke
@@ -34,11 +20,13 @@ public class CalculatorController {
     }
 
     // Kadangi skaičiuotuvo forma naudoja Post metodą, čia irgi nurodome POST
-    @RequestMapping(method = RequestMethod.POST, value = "/skaiciuoti")
+    @PostMapping("/skaiciuoti")
     String skaiciuoti(@RequestParam HashMap<String, String> skaiciai, ModelMap modelMap){
         int sk1 = Integer.parseInt(skaiciai.get("sk1"));
         int sk2 = Integer.parseInt(skaiciai.get("sk2"));
         String zenklas = skaiciai.get("zenklas");
+        System.out.println(skaiciai.entrySet());
+
 
         int rezultatas = 0;
         if(zenklas.equals("+")){
@@ -56,7 +44,7 @@ public class CalculatorController {
         modelMap.put("sk2", sk2);
         modelMap.put("zenklas", zenklas);
         modelMap.put("rezultatas", rezultatas);
-
+        // Prefix + file name + suffix
         return "skaiciuoti";
     }
 
