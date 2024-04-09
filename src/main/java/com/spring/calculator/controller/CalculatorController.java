@@ -1,6 +1,11 @@
-package com.spring.calculator;
+package com.spring.calculator.controller;
 
+import com.spring.calculator.model.Number;
+import com.spring.calculator.service.NumberService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -12,7 +17,22 @@ import java.util.HashMap;
 // @RestController negrąžina view.
 // Kadangi mums reikia grąžinti veiw pagal Spring MVC, naudojame @Controller
 @Controller
+// @EnableAutoConfiguration - žymi konfigūracijos komponentą. Viduje leidžia kurti bean per metodus su @Bean
+// Ši klasės lygio anotacija nurodo Spring karkasui "atspėti" konfigūraciją,
+// remiantis priklausomybėmis (jar bibliotekos), kurias programuotojas įtraukė į projektą.
+// Šiuo atveju ji veikia kartu su main metodu
+@EnableAutoConfiguration
 public class CalculatorController {
+    // autowire - naudojamas automatinei priklausomybių injekcijai
+    // Kad panaudoti @Autowired anotaciją, reikia pirmiausiai turėti apsirašius @Bean @Configuration klasėje
+    @Autowired
+    // @Qualifier anotacija kartu su @Autowired patikslina su kuriuo konkrečiai bean susieti priklausomybę.
+    // Jeigu @Configuration klasėje yra daugiau negu vienas bean, @Qualifier antoacija yra privaloma,
+    // kitu atveju metama klaida:
+    // 'Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans,
+    // or using @Qualifier to identify the bean that should be consumed'
+    @Qualifier("NumberService")
+    public NumberService numberService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     String home(Model model){
@@ -46,6 +66,9 @@ public class CalculatorController {
             modelMap.put("sk2", sk2);
             modelMap.put("zenklas", zenklas);
             modelMap.put("rezultatas", rezultatas);
+
+            //Kreipiamės į service, kuris savo ruožtu kreipiasi į DAO ir išsaugo įrašą DB
+            numberService.save(new Number(sk1, sk2, zenklas, rezultatas));
 
             return "skaiciuoti";
         }
