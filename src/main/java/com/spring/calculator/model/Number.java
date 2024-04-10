@@ -46,6 +46,11 @@ public class Number {
         return id;
     }
 
+    // BŪTINAS, kad Model vaikščiotų tarp front-end ir back-end
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getSk1() {
         return sk1;
     }
