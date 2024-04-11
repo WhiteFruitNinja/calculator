@@ -39,7 +39,7 @@
                     <td>${skaicius.sk1}</td>
                     <td>${skaicius.zenklas}</td>
                     <td>${skaicius.sk2}</td>
-                    <td>${skaicius.rezult}</td>
+                    <td>${skaicius.rezultatas}</td>
 
                     <td>
                         <!-- atvaizduoti atnaujinimo adresą --> <a href="${atnaujinti}">Keisti</a>
