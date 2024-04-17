@@ -1,7 +1,5 @@
 package com.spring.calculator.config;
 
-import com.spring.calculator.model.NumberDAO;
-import com.spring.calculator.model.NumberDAOImpl;
 import com.spring.calculator.service.NumberService;
 import com.spring.calculator.service.NumberServiceImpl;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,12 +22,6 @@ public class SpringConfig {
     // kitu atveju metama klaida:
     // 'Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans,
     // or using @Qualifier to identify the bean that should be consumed'
-    @Qualifier("NumberDAO")
-    public NumberDAO getNumberDAO(){
-        return new NumberDAOImpl();
-    }
-
-    @Bean
     @Qualifier("NumberService")
     public NumberService getNumberService(){
         return new NumberServiceImpl();
