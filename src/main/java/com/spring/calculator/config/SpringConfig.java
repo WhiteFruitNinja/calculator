@@ -2,6 +2,8 @@ package com.spring.calculator.config;
 
 import com.spring.calculator.service.NumberService;
 import com.spring.calculator.service.NumberServiceImpl;
+import com.spring.calculator.service.UserService;
+import com.spring.calculator.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,12 @@ import org.springframework.context.annotation.Configuration;
 // viduje leidžia kurti bean per metodus su @Bean
 @Configuration
 public class SpringConfig {
+
+    @Bean
+    @Qualifier("UserService")
+    public UserService getUserService() {
+        return new UserServiceImpl();
+    }
 
     // Bean - tai objektai, kurei sudaro Spring aplikacijos pagrindą.
     // Paprastai tai Java klasė, realizuojanti tam tikrą interfeisą ir JavaBean specifikaciją.
